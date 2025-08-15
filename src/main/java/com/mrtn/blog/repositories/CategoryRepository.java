@@ -13,6 +13,6 @@ import com.mrtn.blog.domain.entities.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID>
 {
-    @Query("SELECT c FROM category c LEFT JOIN c.posts")
+    @Query("SELECT c FROM Category c LEFT JOIN c.posts")
     List<Category> findAllWithPostCount();
 }
