@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mrtn.blog.domain.dtos.CategoryDto;
+import com.mrtn.blog.mappers.CategoryMapper;
 import com.mrtn.blog.services.CategoryService;
 
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,6 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -21,11 +21,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CategoryController 
 {
     private final CategoryService categoryService;
+    private final CategoryMapper categoryMapper;
 
     @GetMapping
     public ResponseEntity<List<CategoryDto>> listCategories()
     {
-        return null;
+        List<CategoryDto> categories = categoryService.listCategories()
+                .stream().map(categoryMapper::toDto)
+                .toList();
+
+        return ResponseEntity.ok(categories);
     }
     
 }
